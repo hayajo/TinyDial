@@ -1,0 +1,118 @@
+/* DIALS */
+
+#pages {
+  clear:both;
+  margin:0 auto;
+  position:relative;
+  top:15px
+}
+#pages li, .link {
+  box-sizing: border-box;
+  float:left;
+  overflow:hidden!important;
+}
+#pages li {
+  position:absolute;
+  z-index:2;
+}
+#pages li a {
+  text-decoration:none;
+  display:block!important;
+  background:#fff;
+  box-sizing: border-box; 
+  border:1px solid #ccc;
+  /*-webkit-box-shadow: rgba(0,0,0,0.1) 0px 0px 5px!important;*/
+  -webkit-box-shadow: none;
+}
+.thumbnail_container {
+  background-repeat:no-repeat!important;
+  background-position:top left;
+  background-size:contain;
+  background-color:#fff;
+  position:relative;
+  top:0;
+  left:0;
+}
+.title {
+  height:24px;
+  overflow:hidden!important;
+  line-height:20px;
+  padding:2px 5px 0px 5px;
+  box-sizing: border-box; 
+}
+.title .visits { opacity:0.4; padding: 0 4px;}
+#pages li:hover .title .visits { opacity:1 ; }
+#pages li.link.no-thumbnail .link_container {background:#fff;}
+#pages li.link.no-thumbnail .thumbnail_container {
+	background-image:url(../images/nothumbnail.png)!important;
+	background-position: center center;
+	background-repeat:no-repeat;
+	background-size:auto!important;
+}
+
+/*#pages li.highlighted * {
+  border-color:#f00!important;
+}*/
+img.highlight_corner {
+  position:absolute;
+  right:0;
+  top:0;
+  width:20%;
+}
+
+.pages_being_dragged {
+  float:left;
+  overflow:hidden;
+  box-sizing: border-box;
+  opacity:1;
+  z-index:99;
+  height:100px;
+  border:1px dotted #aaa;
+  -webkit-box-shadow: none!important;
+}
+.pages_being_dragged_only_draggable {
+  width:0;
+  height:0;
+}
+.ui-sortable-helper {
+  z-index:995!important;
+}
+
+/* GROUPS */
+
+#groups {
+  z-index:998;
+  position:relative;
+  /*height:56px;
+  min-height:56px;*/
+  height:auto;
+  overflow:hidden;
+  text-align:center;
+  margin-bottom:0px;
+  padding-bottom:0;
+}
+#groups:hover {
+  /*overflow:auto;
+  height:auto;*/
+}
+#groups li a {
+  font-size:17px;
+  margin-bottom:2px;
+}
+
+/* APPS */
+
+div.shadow {
+  
+  /*background:url('../images/shadow6.png?v=29') no-repeat left top;*/
+  height:10px;
+  width:100%;
+  bottom:0px;
+  opacity:0.85;
+  z-index:-1;
+  position:absolute;
+  background-size:100% 10px;
+  
+}
+
+#groups li a {display:block!important;}

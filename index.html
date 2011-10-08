@@ -1,0 +1,53 @@
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="public, max-age=86000">
+    <title>TinyDial</title>
+    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/dial.css">
+    <script src="js_system/options.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js_system/themes.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script src="http://www.trendskitchens.co.nz/jquery/contextmenu/jquery.contextmenu.r2.packed.js"></script>
+    <script src="js_system/dial.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+
+  <body>
+
+    <div class="hidden" id="overlay"></div>
+
+    <div id="container">
+      <div id="main">
+        <ul id="pages"></ul>
+        <br class="clear">
+      </div>
+    </div>
+
+    <div class="contextMenu" id="menu">
+      <ul>
+        <li id="importexport">Import/Export Settings</li>
+      </ul>
+    </div>
+
+    <div id="importexport-dialog" class="dropshadow insertshadow">
+      <form accept-charset="utf-8">
+        <img src="images/close.png" class="close" />
+        <p>
+          <b>Paste settings</b><br>
+          you previously exported through "Export" button.
+        </p>
+        <br class="clear">
+        <textarea id="importexport-textarea" rows="20" cols="100" style="width:100%;"></textarea>
+        <br class="clear">
+        <br class="clear">
+        <input type="button" id="import-settings" class="noalign inline rounded4" value="Import"/>&nbsp;&nbsp;<input type="button" id="export-settings" class="noalign inline rounded4" value="Export"/>&nbsp;&nbsp;or&nbsp;&nbsp;<a href="#" class="cancel">Cancel</a>
+        <br class="clear">
+        <br class="clear">
+      </form>
+    </div>
+
+  </body>
+
+</html>
+
