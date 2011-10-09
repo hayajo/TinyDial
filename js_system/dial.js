@@ -198,8 +198,8 @@ function init()
         'importexport': function(t) { 
             displayDialog('importexport-dialog', function($dialog) {
                 // import-button
-		var $import_button = $dialog.find('#import-settings');
-		$import_button.unbind('click');
+                var $import_button = $dialog.find('#import-settings');
+                $import_button.unbind('click');
                 $import_button.click(function() {
                     var strJSON = $dialog.find('#importexport-textarea').val() || '{}';
                     try {
@@ -211,16 +211,16 @@ function init()
                                 setValue(key, JSON.stringify(value));
                             }
                         });
+                        layoutDials();
+                        $dialog.close_dialog();
+                        $dialog.find('#importexport-textarea').val('');
                     } catch(e) {
                         alert("import error!\n"+e);
                     }
-                    layoutDials();
-                    $dialog.close_dialog();
-                    $dialog.find('#importexport-textarea').val('');
                 });
                 // export-button
-		var $export_button = $dialog.find('#export-settings');
-		$export_button.unbind('click');
+                var $export_button = $dialog.find('#export-settings');
+                $export_button.unbind('click');
                 $export_button.click(function() {
                     var export_settings = {};
                     // export settings
