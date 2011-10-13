@@ -68,7 +68,7 @@ footer a {color:#aaa!important;text-decoration:underline;margin-right:5px;}
 #container {width:100%;height:100%;}
 #content  {padding:2%;width:96%;border:0;}
 #main {margin-bottom:100px;position:relative;top:0; display:block;}
-#url-dialog, #folder-dialog, #importexport-dialog {
+#dial-dialog, #folder-dialog, #settings-dialog {
   position:absolute;
   display:none;
   background-color:#fcfcfc !important;
@@ -81,13 +81,14 @@ footer a {color:#aaa!important;text-decoration:underline;margin-right:5px;}
   margin-left:-186px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, .50);
   background: -webkit-linear-gradient(#fff, #f6f6f6);
+  background: -moz-linear-gradient(#fff, #f6f6f6);
 }
-#importexport-dialog {width:450px;margin-left:-261px}
-#url-dialog .close, #folder-dialog .close, #importexport-dialog .close {position:absolute;right:7px;top:7px;opacity:0.8}
-#url-dialog .close:hover, #folder-dialog .close:hover, #importexport-dialog .close {opacity:1;cursor:pointer;}
-#url-dialog form, #folder-dialog form {width:300px;margin:0 auto;}
-#importexport-dialog form {width:450px;margin:0 auto;}
-#url-dialog form select {padding:5px 2px;width:280px;outline:none;border:1px solid #ccc;}
+#settings-dialog {width:450px;margin-left:-261px}
+#dial-dialog .close, #folder-dialog .close, #settings-dialog .close {position:absolute;right:7px;top:7px;opacity:0.8}
+#dial-dialog .close:hover, #folder-dialog .close:hover, #settings-dialog .close {opacity:1;cursor:pointer;}
+#dial-dialog form, #folder-dialog form {width:300px;margin:0 auto;}
+#settings-dialog form {width:450px;margin:0 auto;}
+#dial-dialog form select {padding:5px 2px;width:280px;outline:none;border:1px solid #ccc;}
 #overlay {	position:fixed;	width:100%;	background:url(../images/overlay.png) #000;	z-index:100;	height:100%; opacity:0.4;}
 #message {display:block;width:300px;background:#222;color:#fff;padding:20px;font-size:20px;position:fixed;top:35%;left:50%;margin-left:-170px;border:1px solid #555;z-index:9999;-webkit-border-radius:5px;display:none; text-align:center;}
 #message a {color:#66D9EF;text-decoration:underline;}
@@ -167,8 +168,8 @@ footer a {color:#aaa!important;text-decoration:underline;margin-right:5px;}
 .delicious_closetag {width:16px;height:20px;background:url(../images/closetag.gif) 0px 0px no-repeat;margin-left:4px;opacity:0.35}
 .delicious_closetag:hover {background:url(../images/closetagactive.gif) 0 0px no-repeat;opacity:1}
 /* CONTEXTMENU */
-#jqContextMenu {border: 1px solid rgba(0, 0, 0, .50);background:#fff; box-shadow: 0px 2px 4px rgba(0, 0, 0, .50);background: linear-gradient(#fff, #f6f6f6); color: black; white-space: nowrap; padding: 8px 0; margin: 0; cursor: default; border-radius: 3px;z-index: 3;}
-#jqContextMenu li.separator { background: linear-gradient(left,rgba(0, 0, 0, .10),rgba(0, 0, 0, .02) 76%); border: 0; height: 1px;padding:0 15px; margin: 8px 0;}
+#jqContextMenu {border:1px solid rgba(0, 0, 0, .50);background:#fff;box-shadow:0px 2px 4px rgba(0, 0, 0, .50);background:-webkit-linear-gradient(#fff, #f6f6f6);background:-moz-linear-gradient(#fff, #f6f6f6);color:black;white-space:nowrap;padding: 8px 0;margin: 0;cursor:default;border-radius:3px;z-index:3;}
+#jqContextMenu li.separator {background:-webkit-linear-gradient(left,rgba(0, 0, 0, .10),rgba(0, 0, 0, .02) 76%);background:-moz-linear-gradient(left,rgba(0, 0, 0, .10),rgba(0, 0, 0, .02) 76%);border:0;height:1px;padding:0 15px;margin:8px 0;}
 #jqContextMenu ul {list-style:none;border:0!important;min-width:160px;margin:0;}
 #jqContextMenu ul li {padding:1px 15px; margin:1px 0; display:block;}
 #jqContextMenu ul li:not([class="separator"]):hover {background:#DCE5FA;}

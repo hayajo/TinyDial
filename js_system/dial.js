@@ -82,6 +82,36 @@ function layoutDials()
         li.setAttribute("position", position); 
         li.setAttribute("row", CURRENT_ROW); 
         li.setAttribute("col", CURRENT_COL); 
+        $(li).contextMenu('menu-dial', {
+            bindings: {
+                'menu-edit-dial': function(t) {
+                    var idx = $(t).attr('position') - 1;
+                    displayDialog('dial-dialog', 'Edit Dial', function($dialog) {
+                        $dialog.find('#url').val(dials[idx].url);
+                        $dialog.find('#name').val(dials[idx].name);
+                        $dialog.find('#image').val(dials[idx].image);
+                        var $edit_button = $dialog.find('#add-edit-dial');
+                        $edit_button.unbind('click');
+                        $edit_button.click(function() {
+                            edit_dial($dialog, idx);
+                            layoutDials();
+                            $dialog.close_dialog();
+                        });
+                    }, function($dialog) {
+                        $dialog.find('#url').val('');
+                        $dialog.find('#name').val('');
+                        $dialog.find('#image').val('');
+                        $dialog.find('#logo').val('');
+                    });
+                },
+                'menu-remove-dial': function(t) {
+                    var idx = $(t).attr('position') - 1;
+                    dials.splice(idx, 1);
+                    setValue('dials', JSON.stringify(dials));
+                    layoutDials();
+                }
+            }
+        });
         link.setAttribute('href', dial.url);
         link.style.width = DIALWIDTH+'px';
         if (getValue('options.dial.alwaysNewTab')==1)
@@ -167,13 +197,18 @@ function layoutDials()
 
 }
 
-function displayDialog(dialog, displayCb, cancelCb)
+function displayDialog(dialog, title, displayCb, cancelCb)
 {
     var $overlay = $('#overlay');
     var $dialog = $('#'+dialog);
 
+    var h2 = $dialog.find('h2');
+    if (title != null && h2.length > 0) {
+        h2[0].innerHTML=title;
+    }
+
     $dialog.close_dialog = function() {
-        $dialog.hide(250);
+        $dialog.hide(0);
         $overlay.fadeOut(250);
         if (cancelCb) cancelCb($dialog); 
     };
@@ -183,37 +218,95 @@ function displayDialog(dialog, displayCb, cancelCb)
     $dialog.find('.cancel').click($dialog.close_dialog);
 
     $overlay.fadeIn(250);
-    $dialog.show(250);
+    $dialog.show(0);
 
     if (displayCb) displayCb($dialog);
+}
+
+function clearDialog(dialog) {
+    var $dialog = $('#'+dialog);
+    if (dialog == 'dialog') {
+    } else if (dialog == '') {
+    }
+}
+
+function import_settings(strJSON)
+{
+    var objJSON = JSON.parse(strJSON);
+    $.each(objJSON, function(key, value) {
+        if (key != 'dials') {
+            setValue(key, value);
+        } else {
+            setValue(key, JSON.stringify(value));
+        }
+    });
+}
+
+function export_settings(objJSON) {
+    var export_settings = {};
+    for (var i=0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        var value;
+        if (key != 'dials') {
+            value = localStorage.getItem(localStorage.key(i));
+        } else {
+            value = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        }
+        export_settings[key] = value;
+    }
+    return export_settings;
+}
+
+function edit_dial($dialog, replace_idx) {
+    var image = $dialog.find('#logo').val();
+    if (image == '') {
+        image = $dialog.find('#image').val();
+    }
+    var dial_data = {
+        'url': $dialog.find('#url').val(),
+        'name': $dialog.find('#name').val(),
+        'image': image
+    };
+    var dials = (getValue('dials')) ? JSON.parse(getValue('dials')) : new Array();
+    if (replace_idx != null) {
+        dials[replace_idx] = dial_data;
+    } else {
+        dials.push(dial_data);
+    }
+    setValue('dials', JSON.stringify(dials));
 }
 
 function init() 
 {
     $('#container').contextMenu('menu', {
-      menuStyle : {
-        border : "1px solid #ccc"
-      },
       bindings: {
-        'importexport': function(t) { 
-            displayDialog('importexport-dialog', function($dialog) {
+        'menu-add-dial': function(t) {
+            displayDialog('dial-dialog', 'Add Dial', function($dialog) {
+                var $edit_button = $dialog.find('#add-edit-dial');
+                $edit_button.unbind('click');
+                $edit_button.click(function() {
+                    edit_dial($dialog);
+                    layoutDials();
+                    $dialog.close_dialog();
+                });
+            }, function($dialog) {
+                $dialog.find('#url').val('');
+                $dialog.find('#name').val('');
+                $dialog.find('#image').val('');
+                $dialog.find('#logo').val('');
+            });
+        },
+        'menu-import-export-settings': function(t) { 
+            displayDialog('settings-dialog', null, function($dialog) {
                 // import-button
                 var $import_button = $dialog.find('#import-settings');
                 $import_button.unbind('click');
                 $import_button.click(function() {
-                    var strJSON = $dialog.find('#importexport-textarea').val() || '{}';
+                    var strJSON = $dialog.find('#import-export-textarea').val() || '{}';
                     try {
-                        var objJSON = JSON.parse(strJSON);
-                        $.each(objJSON, function(key, value) {
-                            if (key != 'dials') {
-                                setValue(key, value);
-                            } else {
-                                setValue(key, JSON.stringify(value));
-                            }
-                        });
-                        layoutDials();
+                        import_settings(strJSON);
                         $dialog.close_dialog();
-                        $dialog.find('#importexport-textarea').val('');
+                        location.reload();
                     } catch(e) {
                         alert("import error!\n"+e);
                     }
@@ -222,22 +315,11 @@ function init()
                 var $export_button = $dialog.find('#export-settings');
                 $export_button.unbind('click');
                 $export_button.click(function() {
-                    var export_settings = {};
-                    // export settings
-                    for (var i=0; i < localStorage.length; i++) {
-                        var key = localStorage.key(i);
-                        var value;
-                        if (key != 'dials') {
-                            value = localStorage.getItem(localStorage.key(i));
-                        } else {
-                            value = JSON.parse(localStorage.getItem(localStorage.key(i)));
-                        }
-                        export_settings[key] = value;
-                    }
-                    $dialog.find('#importexport-textarea').val(JSON.stringify(export_settings, null, 2));
+                    var settings = export_settings();
+                    $dialog.find('#import-export-textarea').val(JSON.stringify(settings, null, 2));
                 });
             }, function($dialog) {
-                $dialog.find('#importexport-textarea').val('');
+                $dialog.find('#import-export-textarea').val('');
             });
         }
       }

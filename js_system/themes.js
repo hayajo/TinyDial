@@ -15,7 +15,7 @@ if (getValue('options.dial.style.round')) {
 }
 
 if (getValue('options.dial.style.shadow') == '1') 
-    document.write('#pages li a {box-shadow: 2px 2px 4px rgba(0, 0, 0, .7);}');
+    document.write('#pages li a {box-shadow: 0px 4px 4px rgba(0, 0, 0, .6);}');
 
 if (getValue('options.dial.style.title.face'))
     document.write('.link {font-family:'+getValue('options.dial.style.title.face')+', sans-serif;}');
