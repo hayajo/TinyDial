@@ -32,7 +32,7 @@ function layoutDials()
     // 
     var RATIO_MODIFIED = false;
 
-    var CONTAINER_TOP = 15;
+    var CONTAINER_TOP = 0;
 
     // maximized Chrome inner window ratio
     if (RATIO < 0.55) { RATIO = 0.55; RATIO_MODIFIED = true }
