@@ -57,8 +57,10 @@ html,body {-webkit-user-select: none; cursor:default; margin:0!important;padding
 a, a:active, a:visited { color: #233; text-decoration:none; cursor:pointer; }
 a:hover { color: #000; text-decoration:underline; }
 label {cursor:default;}
-header{ top:0; left:0; float:right; padding:6px 10px 6px 10px; z-index:999;}
-header a {color:#ccc!important;font-size:13px;}
+header{ top:0; left:0; float:right; z-index:999;width:100%;}
+header a {color:#aaa!important;font-size:13px;}
+header #config {float:left;padding:6px 10px 6px 10px;}
+header #add-dial {float:right;padding:6px 10px 6px 10px;}
 footer {bottom:10px;text-align:right; right:15px; color:#888; position:fixed; font-size:11px; z-index:1999;}
 footer span {color:#FA5994;}
 footer a {color:#aaa!important;text-decoration:underline;margin-right:5px;}

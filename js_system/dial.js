@@ -86,23 +86,8 @@ function layoutDials()
             bindings: {
                 'menu-edit-dial': function(t) {
                     var idx = $(t).attr('position') - 1;
-                    displayDialog('dial-dialog', 'Edit Dial', function($dialog) {
-                        $dialog.find('#url').val(dials[idx].url);
-                        $dialog.find('#name').val(dials[idx].name);
-                        $dialog.find('#image').val(dials[idx].image);
-                        var $edit_button = $dialog.find('#add-edit-dial');
-                        $edit_button.unbind('click');
-                        $edit_button.click(function() {
-                            edit_dial($dialog, idx);
-                            layoutDials();
-                            $dialog.close_dialog();
-                        });
-                    }, function($dialog) {
-                        $dialog.find('#url').val('');
-                        $dialog.find('#name').val('');
-                        $dialog.find('#image').val('');
-                        $dialog.find('#logo').val('');
-                    });
+                    var dial = dials[idx];
+                    displayEditDialDialog(dial);
                 },
                 'menu-remove-dial': function(t) {
                     var idx = $(t).attr('position') - 1;
@@ -276,57 +261,88 @@ function edit_dial($dialog, replace_idx) {
     setValue('dials', JSON.stringify(dials));
 }
 
+function displayEditDialDialog(dial) {
+    displayDialog('dial-dialog', 'Edit Dial', function($dialog) {
+        $dialog.find('#url').val(dial.url);
+        $dialog.find('#name').val(dial.name);
+        $dialog.find('#image').val(dial.image);
+        var $edit_button = $dialog.find('#add-edit-dial');
+        $edit_button.unbind('click');
+        $edit_button.click(function() {
+            edit_dial($dialog, idx);
+            layoutDials();
+            $dialog.close_dialog();
+        });
+    }, function($dialog) {
+        $dialog.find('#url').val('');
+        $dialog.find('#name').val('');
+        $dialog.find('#image').val('');
+        $dialog.find('#logo').val('');
+    });
+}
+
+function displayAddDialDialog() {
+    displayDialog('dial-dialog', 'Add Dial', function($dialog) {
+        var $edit_button = $dialog.find('#add-edit-dial');
+        $edit_button.unbind('click');
+        $edit_button.click(function() {
+            edit_dial($dialog);
+            layoutDials();
+            $dialog.close_dialog();
+        });
+    }, function($dialog) {
+        $dialog.find('#url').val('');
+        $dialog.find('#name').val('');
+        $dialog.find('#image').val('');
+        $dialog.find('#logo').val('');
+    });
+}
+
+function displaySettingsDialog() {
+    displayDialog('settings-dialog', null, function($dialog) {
+        // import-button
+        var $import_button = $dialog.find('#import-settings');
+        $import_button.unbind('click');
+        $import_button.click(function() {
+            var strJSON = $dialog.find('#import-export-textarea').val() || '{}';
+            try {
+                import_settings(strJSON);
+                $dialog.close_dialog();
+                location.reload();
+            } catch(e) {
+                alert("import error!\n"+e);
+            }
+        });
+        // export-button
+        var $export_button = $dialog.find('#export-settings');
+        $export_button.unbind('click');
+        $export_button.click(function() {
+            var settings = export_settings();
+            $dialog.find('#import-export-textarea').val(JSON.stringify(settings, null, 2));
+        });
+    }, function($dialog) {
+        $dialog.find('#import-export-textarea').val('');
+    });
+}
+
 function init() 
 {
     $('#container').contextMenu('menu', {
       bindings: {
         'menu-add-dial': function(t) {
-            displayDialog('dial-dialog', 'Add Dial', function($dialog) {
-                var $edit_button = $dialog.find('#add-edit-dial');
-                $edit_button.unbind('click');
-                $edit_button.click(function() {
-                    edit_dial($dialog);
-                    layoutDials();
-                    $dialog.close_dialog();
-                });
-            }, function($dialog) {
-                $dialog.find('#url').val('');
-                $dialog.find('#name').val('');
-                $dialog.find('#image').val('');
-                $dialog.find('#logo').val('');
-            });
+            displayAddDialDialog();
         },
         'menu-import-export-settings': function(t) { 
-            displayDialog('settings-dialog', null, function($dialog) {
-                // import-button
-                var $import_button = $dialog.find('#import-settings');
-                $import_button.unbind('click');
-                $import_button.click(function() {
-                    var strJSON = $dialog.find('#import-export-textarea').val() || '{}';
-                    try {
-                        import_settings(strJSON);
-                        $dialog.close_dialog();
-                        location.reload();
-                    } catch(e) {
-                        alert("import error!\n"+e);
-                    }
-                });
-                // export-button
-                var $export_button = $dialog.find('#export-settings');
-                $export_button.unbind('click');
-                $export_button.click(function() {
-                    var settings = export_settings();
-                    $dialog.find('#import-export-textarea').val(JSON.stringify(settings, null, 2));
-                });
-            }, function($dialog) {
-                $dialog.find('#import-export-textarea').val('');
-            });
+            displaySettingsDialog();
         }
       }
     });
 
+    $('#button-config').click(function(t) { displaySettingsDialog() });
+    $('#button-add-dial').click(function(t) { displayAddDialDialog() });
+
     layoutDials();
-}		
+}
 
 $(function() {
     var default_dials = [
