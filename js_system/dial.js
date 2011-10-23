@@ -87,7 +87,7 @@ function layoutDials()
                 'menu-edit-dial': function(t) {
                     var idx = $(t).attr('position') - 1;
                     var dial = dials[idx];
-                    displayEditDialDialog(dial);
+                    displayEditDialDialog(dial, idx);
                 },
                 'menu-remove-dial': function(t) {
                     var idx = $(t).attr('position') - 1;
