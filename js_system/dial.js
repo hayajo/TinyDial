@@ -261,7 +261,7 @@ function edit_dial($dialog, replace_idx) {
     setValue('dials', JSON.stringify(dials));
 }
 
-function displayEditDialDialog(dial) {
+function displayEditDialDialog(dial, idx) {
     displayDialog('dial-dialog', 'Edit Dial', function($dialog) {
         $dialog.find('#url').val(dial.url);
         $dialog.find('#name').val(dial.name);
